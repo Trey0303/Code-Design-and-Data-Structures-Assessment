@@ -42,7 +42,7 @@ public:
 	void print();
 
 	bool empty() const; //returns true if the vector contains no elements
-	void resize(const T& num);//resizes the vector to contain the given number of elements
+	void resize(size_t num);//resizes the vector to contain the given number of elements
 	void shrink_to_fit();//resizes the vectors capacity to match its size
 	void clear();   //empties the vector (all elements are destroyed in this process)
 
@@ -176,7 +176,7 @@ bool tVector<T>::empty() const {
 }
 
 template<class T>
-void tVector<T>::resize(const T& num) {
+void tVector<T>::resize(size_t num) {
 	bool fixed = false;
 	while (!fixed) {
 		//if array has more elements than requested
@@ -190,26 +190,7 @@ void tVector<T>::resize(const T& num) {
 		}
 		//if array has less elements than requested
 		else if (num > arr) {
-			if (arrSize >= arrCapacity) {
-
-				//updates arrCapacity
-				arrCapacity = arrCapacity * GROWTH_FACTOR;
-				//create new array
-				T* newData = new T[arrCapacity];
-
-				//copy everything over
-				for (size_t i = 0; i < arrSize; ++i) {
-					newData[i] = arr[i];
-				}
-				//delete old array
-				delete[] arr;
-
-				//update variables
-				arr = newData;
-			}
-
-			arr[arrSize] = num;
-			++arrSize;
+			//add elements until arrSize meet the requested number
 		}
 		else {
 			fixed = true;
