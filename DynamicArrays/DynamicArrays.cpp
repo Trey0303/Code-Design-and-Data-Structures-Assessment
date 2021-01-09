@@ -49,26 +49,36 @@ int main()
 
     original.shrink_to_fit();
 
+    //removing elements from array
     original.pop_back(); 
     original.pop_back();
     original.pop_back();
     original.pop_back();
 
+    //tests to see if array is empty or not
     original.print();
     original.empty();
     original.shrink_to_fit();
 
+    //adding elements to array
     original.push_back(4);
     original.push_back(5);
     original.push_back(6);
     original.shrink_to_fit();
     original.print();
 
+    //clears all elements in array
     original.clear();
     original.shrink_to_fit();
     original.print();
 
+    //resize to a bigger number
     original.resize(10);
+    original.print();
+
+    //resize to a smaller number
+    original.resize(5);
+    original.print();
 
     return 0;
 }

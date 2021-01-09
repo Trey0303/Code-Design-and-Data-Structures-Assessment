@@ -180,7 +180,7 @@ void tVector<T>::resize(size_t num) {
 	bool fixed = false;
 	while (!fixed) {
 		//if array has more elements than requested
-		if (num < arr) {
+		if (num < arrSize) {
 			fixed = false;
 			//destroy the last element
 			arr[arrSize - 1].~T();
@@ -189,8 +189,33 @@ void tVector<T>::resize(size_t num) {
 			--arrSize;
 		}
 		//if array has less elements than requested
-		else if (num > arr) {
+		else if (num > arrSize) {
 			//add elements until arrSize meet the requested number
+			/*for (arrSize; arrSize < num; arrSize++) {
+
+			}*/
+
+			if (arrSize >= arrCapacity) {
+
+				//updates arrCapacity
+				arrCapacity = arrCapacity * GROWTH_FACTOR;
+				//create new array
+				T* newData = new T[arrCapacity];
+
+				//copy everything over
+				for (size_t i = 0; i < arrSize; ++i) {
+					newData[i] = arr[i];
+				}
+				//delete old array
+				delete[] arr;
+
+				//update variables
+				arr = newData;
+			}
+
+			//sets every element to given number
+			arr[arrSize] = num;
+			++arrSize;
 		}
 		else {
 			fixed = true;
