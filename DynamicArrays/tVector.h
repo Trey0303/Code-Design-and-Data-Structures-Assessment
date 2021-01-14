@@ -46,6 +46,64 @@ public:
 	void shrink_to_fit();//resizes the vectors capacity to match its size
 	void clear();   //empties the vector (all elements are destroyed in this process)
 
+	class iterator {
+		tVector* vec;
+		//negative numbers wont work with size_t
+		size_t cur;
+
+	public:
+		//initializes an emty iterator pointing to nothing
+		iterator() {
+			vec = nullptr;
+			cur = 0;
+		}
+
+		//initializes an iterator pointing to the given vector at the given location
+		iterator(tVector* target, size_t start) {
+			vec = target;
+			cur = start;
+		}
+
+		//returns true if iterator points to the same element
+		bool operator==(const iterator& rhs) const {
+
+			if (rhs == cur) {
+				return true;
+
+			}
+		}
+
+		//returns false if the iterator does not point to the element
+		bool operator!=(const iterator& rhs) const {
+			if (rhs != cur){
+				return false;
+			}
+			return false;
+		}
+
+		//returns a reference to the element being iterated on
+		T& operator*() const {
+			return vec->at(cur);
+		}
+
+		//pre-increment (returns a reference to this iterator after it is incremented)
+		iterator& operator++() {
+			cur++;
+			return *this;
+		}
+
+		//post-increment (returns an iterator to node while incrementing the existing iterator)
+		iterator operator++(int) {
+			++cur;
+			iterator oldIter(this, cur - 1);
+
+			return oldIter;
+		}
+	};
+	//returns an iterator pointing to the beginning of the vector
+	iterator begin();
+	//returns an iterator pointing after the last element of the vector
+	iterator end();
 };
 
 template <typename T>
@@ -275,4 +333,14 @@ void tVector<T>::clear() {
 
 	}
 	std::cout << "array is cleared" << std::endl;
+}
+
+template <typename T>
+typename tVector<T>::iterator tVector<T>::begin() {
+	return iterator(this, 0);
+}
+
+template <typename T>
+typename tVector<T>::iterator tVector<T>::end() {
+	return iterator(this, arrSize);
 }

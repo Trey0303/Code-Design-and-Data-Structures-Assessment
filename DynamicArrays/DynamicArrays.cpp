@@ -80,5 +80,20 @@ int main()
     original.resize(5);
     original.print();
 
+    tVector<int> stlNumbers;
+
+    stlNumbers.push_back(5);
+    stlNumbers.push_back(7);
+    stlNumbers.push_back(9);
+    stlNumbers.push_back(12);
+
+    for (auto it = stlNumbers.begin();it != stlNumbers.end();++it) {
+        
+        std::cout << (*it) << std::endl;
+    }
+
+    auto it = stlNumbers.begin();
+    int itVal = *it;
+
     return 0;
 }
