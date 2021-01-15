@@ -71,6 +71,7 @@ public:
 
 		//returns false if the iterator does not point to the element
 		bool operator!=(const iterator& rhs) const {
+			//return if (*this == rhs) is not true
 			return !(*this == rhs);
 		}
 
