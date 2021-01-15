@@ -87,13 +87,21 @@ int main()
     stlNumbers.push_back(9);
     stlNumbers.push_back(12);
 
+
+    auto it = stlNumbers.begin();
+    int itVal = *it;
+
+    tVector<int> numbers;
+    auto itA = numbers.begin();
+    auto itB = numbers.begin();
+    bool same = itA == itB; // this should be true
+
+    std::cout << same << std::endl;
+
     for (auto it = stlNumbers.begin();it != stlNumbers.end();++it) {
         
         std::cout << (*it) << std::endl;
     }
-
-    auto it = stlNumbers.begin();
-    int itVal = *it;
 
     return 0;
 }

@@ -66,19 +66,12 @@ public:
 
 		//returns true if iterator points to the same element
 		bool operator==(const iterator& rhs) const {
-
-			if (rhs == cur) {
-				return true;
-
-			}
+			return rhs.vec == vec && rhs.cur == cur;
 		}
 
 		//returns false if the iterator does not point to the element
 		bool operator!=(const iterator& rhs) const {
-			if (rhs != cur){
-				return false;
-			}
-			return false;
+			return !(*this == rhs);
 		}
 
 		//returns a reference to the element being iterated on
