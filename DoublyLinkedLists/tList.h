@@ -22,8 +22,8 @@ public:
 	void push_front(const T& val); //adds element to front
 	void pop_front(); //removes element from front
 	
-	//void push_back(const T& val); //adds element to back
-	//void pop_back(); //removes element from back
+	void push_back(const T& val); //adds element to back
+	void pop_back(); //removes element from back
 
 	T& front(); //returns the element at the head/front
 	T& back(); //returns the element at the tail/back
@@ -31,7 +31,6 @@ public:
 
 template <typename T>
 tList<T>::tList() {
-	//arr = new T[1];
 	head = nullptr;
 	tail = nullptr;
 }
@@ -70,6 +69,7 @@ tList<T>::tList(const tList& other) {
 template <typename T>
 tList<T>::~tList() {
 	//delete all the nodes
+	
 }
 
 template <typename T>
@@ -112,16 +112,41 @@ void tList<T>::pop_front() {
 	delete oldHead;
 }
 
-//template <typename T>
-//void tList<T>::push_back(const T& val) {
-//
-//}
-//
-//template <typename T>
-//void tList<T>::pop_back() {
-//
-//}
-//
+template <typename T>
+void tList<T>::push_back(const T& val) {
+	node* newNode = new node();//created a new node
+
+	newNode->data = val;
+	newNode->next = nullptr;
+	newNode->prev = tail;
+
+	if (head != nullptr) {
+		tail->next = newNode;
+	}
+
+	tail = newNode;
+
+	if (head == nullptr) {
+		head = newNode;
+	}
+}
+
+template <typename T>
+void tList<T>::pop_back() {
+	node* oldtail = tail;
+	//note:if tail is null,things will break
+	head = oldtail->prev;
+
+	if (tail != nullptr) {
+		tail->next = nullptr;
+	}
+	else {
+		tail = nullptr;
+	}
+
+	delete oldtail;
+}
+
 template <typename T>
 T& tList<T>::front() {//similar to back()
 	return head->data;//return the head which is in the front of the list

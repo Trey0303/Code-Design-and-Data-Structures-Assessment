@@ -16,6 +16,8 @@ int main()
     tList<int> numCopy(num);
 
     num.pop_front();
+    num.pop_back();
+
 
     return 0;
 }
