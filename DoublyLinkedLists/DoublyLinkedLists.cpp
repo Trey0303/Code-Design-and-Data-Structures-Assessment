@@ -3,10 +3,19 @@
 
 int main()
 {
-    tList<int> arr;
+    tList<int> num;
 
-    arr.push_front(5);
-    arr.push_front(3);
+    num.push_front(5);
+    num.push_front(3);
+    num.push_front(6);
+    num.push_front(9);
+
+    int fr = num.front();
+    int bk = num.back();
+
+    tList<int> numCopy(num);
+
+    num.pop_front();
 
     return 0;
 }
