@@ -17,6 +17,8 @@ public:
 	//rule of three
 	tList(const tList& other);//copys list
 
+	tList& operator=(const tList& rhs);
+
 	~tList(); //delete all nodes
 
 	void push_front(const T& val); //adds element to front
@@ -67,9 +69,14 @@ tList<T>::tList(const tList& other) {
 }
 
 template <typename T>
-tList<T>::~tList() {
-	//delete all the nodes
+tList<T>& tList<T>::operator=(const tList& rhs) {
 	
+}
+
+template <typename T>
+tList<T>::~tList() {
+	delete head;
+	delete tail;
 }
 
 template <typename T>
