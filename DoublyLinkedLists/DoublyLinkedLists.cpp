@@ -18,5 +18,9 @@ int main()
     num.pop_front();
     num.pop_back();
 
+    num.push_front(9);
+    num.push_back(20);
+    num.push_front(18);
+
     return 0;
 }
