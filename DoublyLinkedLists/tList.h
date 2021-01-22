@@ -71,23 +71,40 @@ tList<T>::tList(const tList& other) {
 template <typename T>
 tList<T>& tList<T>::operator=(const tList& rhs) {
 	node *other = rhs.head;//create new list
+	node* prevNode = nullptr;//starts off null
 	while (other != nullptr) {//until equal to tail of rhs list
-		node* newNode = new node();//create new node
-		newNode->data = other->data;//->data is to access node inside list(put in the data)
-		
-		newNode->next = head;//create a pointer for next number
-		
-		if (head->prev != nullptr) {//if prev number not null
-			newNode->prev = head->prev;//make a pointer for previous number
-		}
+		//create node to put a number from rhs in
+		node* curNode = new node();//create new node
 
-		if (head != nullptr) {
-			head->next = newNode;//point to its next number
+		//put rhs number into empty new node
+		curNode->data = other->data;//->data is to access node inside list(put in the data)
+		
+		//get new node to have pointers for previous and next number/node
+		//?? needs to point to next number in rhs for when it loops
+		curNode->next = nullptr;//next is always null because the next number hasnt been copied over yet
+		
+		//will create pointer to for curNode to point to for previous number(note: prevNode should start off null)
+		curNode->prev = prevNode;//create a pointer for preious number
+
+		//when its not the first time running through this code
+		if (prevNode != nullptr) {//if previous node exist
+			//?? needs to point to prev number if there is one for when it loops
+			prevNode->next = curNode;//set pointer for previous node to current node for so it knows what number comes after prev node
+
 		}
+		prevNode = curNode;//update previous node
+		
 
 		other = other->next;//access next node in other list
+
+		if (other == nullptr) {
+			//set a pointer for tail at the back of the list
+			tail = curNode;
+		}
 	}
-	return this;
+
+	//return new list
+	return *this;
 }
 
 template <typename T>

@@ -22,5 +22,22 @@ int main()
     num.push_back(20);
     num.push_front(18);
 
+    tList<int> someNum;
+    someNum.push_front(5);//tail
+    someNum.push_front(1);
+    someNum.push_front(7);
+    someNum.push_front(2);//head
+
+    tList<int> otherNum;
+
+    otherNum.push_front(8);//tail
+    otherNum.push_front(4);
+    otherNum.push_front(3);
+    otherNum.push_front(9);//head
+
+    //problem: head-9 last node is 
+
+    otherNum = someNum;
+
     return 0;
 }
