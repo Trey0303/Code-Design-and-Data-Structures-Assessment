@@ -35,7 +35,13 @@ int main()
     otherNum.push_front(3);
     otherNum.push_front(9);//head
 
-    //problem: head-9 last node is 
+    otherNum = someNum;
+
+    someNum.push_front(3);
+
+    otherNum = someNum;
+
+    otherNum.push_front(7);
 
     otherNum = someNum;
 

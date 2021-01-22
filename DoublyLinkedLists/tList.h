@@ -70,6 +70,22 @@ tList<T>::tList(const tList& other) {
 
 template <typename T>
 tList<T>& tList<T>::operator=(const tList& rhs) {
+	//deletes old data in copy list
+	while (head != nullptr) {//loop until is null
+		node* oldtail = tail;
+		//note:if tail is null,things will break
+		tail = oldtail->prev;
+
+		if (tail != nullptr) {
+			tail->next = nullptr;
+		}
+		else {
+			head = nullptr;
+		}
+
+		delete oldtail;
+	}
+
 	node *other = rhs.head;//create new list
 	node* prevNode = nullptr;//starts off null
 	while (other != nullptr) {//until equal to tail of rhs list
@@ -90,18 +106,25 @@ tList<T>& tList<T>::operator=(const tList& rhs) {
 		if (prevNode != nullptr) {//if previous node exist
 			//?? needs to point to prev number if there is one for when it loops
 			prevNode->next = curNode;//set pointer for previous node to current node for so it knows what number comes after prev node
-
+			
+		}
+		else{
+			head = curNode;
 		}
 		prevNode = curNode;//update previous node
 		
 
 		other = other->next;//access next node in other list
 
-		if (other == nullptr) {
-			//set a pointer for tail at the back of the list
-			tail = curNode;
-		}
+		//if (other == nullptr) {
+		//set a pointer for tail at the back of the list
+		//tail = curNode;
+		//}
 	}
+
+	tail = prevNode;
+
+	//head = rhs.head;
 
 	//return new list
 	return *this;
