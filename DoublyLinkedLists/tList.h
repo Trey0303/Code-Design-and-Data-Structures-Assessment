@@ -70,7 +70,24 @@ tList<T>::tList(const tList& other) {
 
 template <typename T>
 tList<T>& tList<T>::operator=(const tList& rhs) {
-	
+	node *other = rhs.head;//create new list
+	while (other != nullptr) {//until equal to tail of rhs list
+		node* newNode = new node();//create new node
+		newNode->data = other->data;//->data is to access node inside list(put in the data)
+		
+		newNode->next = head;//create a pointer for next number
+		
+		if (head->prev != nullptr) {//if prev number not null
+			newNode->prev = head->prev;//make a pointer for previous number
+		}
+
+		if (head != nullptr) {
+			head->next = newNode;//point to its next number
+		}
+
+		other = other->next;//access next node in other list
+	}
+	return this;
 }
 
 template <typename T>
