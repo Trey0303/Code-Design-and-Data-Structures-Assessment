@@ -18,7 +18,5 @@ int main()
     num.pop_front();
     num.pop_back();
 
-    num.~tList();
-
     return 0;
 }

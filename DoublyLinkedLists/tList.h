@@ -75,8 +75,23 @@ tList<T>& tList<T>::operator=(const tList& rhs) {
 
 template <typename T>
 tList<T>::~tList() {
+	while (head != nullptr) {//loop until is null
+		node* oldtail = tail;
+		//note:if tail is null,things will break
+		tail = oldtail->prev;
+
+		if (tail != nullptr) {
+			tail->next = nullptr;
+		}
+		else {
+			head = nullptr;
+		}
+
+		delete oldtail;
+	}
+	/*
 	delete head;
-	delete tail;
+	delete tail;*/
 }
 
 template <typename T>
@@ -105,9 +120,9 @@ void tList<T>::push_front(const T& val) {
 
 template <typename T>
 void tList<T>::pop_front() {
-	node* oldHead = head;
+	node* oldHead = head;//oldHead becomes head
 	//note:if head is null,things will break
-	head = oldHead->next;
+	head = oldHead->next;//head becomes head.next
 
 	if (head != nullptr) {
 		head->prev = nullptr;
@@ -142,13 +157,13 @@ template <typename T>
 void tList<T>::pop_back() {
 	node* oldtail = tail;
 	//note:if tail is null,things will break
-	head = oldtail->prev;
+	tail = oldtail->prev;
 
 	if (tail != nullptr) {
 		tail->next = nullptr;
 	}
 	else {
-		tail = nullptr;
+		head = nullptr;
 	}
 
 	delete oldtail;
