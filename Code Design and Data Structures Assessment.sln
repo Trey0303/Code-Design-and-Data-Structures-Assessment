@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicArrays", "DynamicArr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DoublyLinkedLists", "DoublyLinkedLists\DoublyLinkedLists.vcxproj", "{5732E138-D93B-4B33-986D-E2308D45FA06}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryTree", "BinaryTree\BinaryTree.vcxproj", "{EEF61492-587A-4F26-B16D-A92920106030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{5732E138-D93B-4B33-986D-E2308D45FA06}.Release|x64.Build.0 = Release|x64
 		{5732E138-D93B-4B33-986D-E2308D45FA06}.Release|x86.ActiveCfg = Release|Win32
 		{5732E138-D93B-4B33-986D-E2308D45FA06}.Release|x86.Build.0 = Release|Win32
+		{EEF61492-587A-4F26-B16D-A92920106030}.Debug|x64.ActiveCfg = Debug|x64
+		{EEF61492-587A-4F26-B16D-A92920106030}.Debug|x64.Build.0 = Debug|x64
+		{EEF61492-587A-4F26-B16D-A92920106030}.Debug|x86.ActiveCfg = Debug|Win32
+		{EEF61492-587A-4F26-B16D-A92920106030}.Debug|x86.Build.0 = Debug|Win32
+		{EEF61492-587A-4F26-B16D-A92920106030}.Release|x64.ActiveCfg = Release|x64
+		{EEF61492-587A-4F26-B16D-A92920106030}.Release|x64.Build.0 = Release|x64
+		{EEF61492-587A-4F26-B16D-A92920106030}.Release|x86.ActiveCfg = Release|Win32
+		{EEF61492-587A-4F26-B16D-A92920106030}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
