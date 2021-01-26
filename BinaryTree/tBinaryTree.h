@@ -36,7 +36,9 @@ private:
 	//parent is a reference to a POINTER to a VERTEX
 	void _insertRecursive(vertex*& curParent, const T& value);
 
-	bool searchRecursive(vertex*& curParent, const T& value, vertex& found);
+	bool searchRecursive(vertex*& curParent, const T& value, vertex& found, bool valFound);
+
+	void clearTree(vertex*& curParent);
 
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
@@ -49,22 +51,46 @@ tBinaryTree<T>::tBinaryTree() {
 template<typename T>
 tBinaryTree<T>::~tBinaryTree() {
 	//delete all vertices
+	while (root != nullptr) {//while tree not clear
+		clearTree(root);
+		
+	}
+	std::cout << "cleared" << std::endl;
 }
+
+
+template<typename T>
+void tBinaryTree<T>::clearTree(vertex*& curParent) {
+	if (curParent->left != nullptr) {//node to the left is not empty
+		clearTree(curParent->left);
+	}
+	else if (curParent->right != nullptr) {//node to the right is not empty
+		clearTree(curParent->right);
+	}
+	else if (curParent != nullptr) {//if right and left of curParent are both null and root isnt
+		curParent = nullptr;
+		delete curParent;//delete root
+		//after deleted curParent
+		//will check while loop to see if there are still nodes left
+		//if there are then it will start this function again from the beginning
+	}
+}
+
 
 template<typename T>
 bool tBinaryTree<T>::vertex::hasLeft() const{
-	/*if (left != nullptr) {
+	if (left != nullptr) {
 		return true;
 	}
-	return false;*/
+	return false;
 }
 
 template<typename T>
 bool tBinaryTree<T>::vertex::hasRight() const {
-	/*if (right != nullptr) {
+	if (right != nullptr) {
 		return true;
 	}
-	return false;*/
+	return false;
 }
 
 template<typename T>
@@ -101,35 +127,40 @@ void tBinaryTree<T>::_insertRecursive(vertex*& curParent, const T& value) {
 	else if (value < curParent->data)
 	{
 		//repeat this function using a different parent that is on the left(because value is less than current parent)
-		_insertRecursive(root->left, value);//replaces curParent with value that is to the left of current root/parent
+		_insertRecursive(curParent->left, value);//replaces curParent with value that is to the left of current root/parent
 	}
 	// ok, it's greater than the current vertex, so...
 	else
 	{
 		//repeat this function using a different parent that is on the right(because value is greater than current parent)
-		_insertRecursive(root->right, value);//replaces curParent with value that is to the right of current root/parent
+		_insertRecursive(curParent->right, value);//replaces curParent with value that is to the right of current root/parent
 	}
 
 }
 
 template<typename T>
 bool tBinaryTree<T>::search(const T& value, vertex& found) {
-	searchRecursive(root, value);
+	bool valFound = false;
+	searchRecursive(root, value, found, valFound);
+	return valFound;
 }
 
 template<typename T>
-bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& found) {
+bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& found, bool valFound) {
 	if (curParent->data == value) {//if value is found
-		return value;
+		//found = value;//makes found a copy of vertex value?
+		valFound = true;
+		return valFound;//return true
 	}
 	else if (curParent->data < value) {//if target value bigger
-		searchRecursive(root->right, value);
+		searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
 	}
 	else if (curParent->data > value) {//if target value smaller
-		searchRecursive(root->left, value);
+		searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
 	}
 	else {//if value not found anywhere in tree
 		std::cout << "Not Found" << std::endl;
-		return value;
+		valFound = false;
+		return valFound;//return false
 	}
 }
