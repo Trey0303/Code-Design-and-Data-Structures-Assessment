@@ -25,6 +25,9 @@ public:
 	~tBinaryTree();//destructs the tree, cleaning up its data members
 
 	void insert(const T& value);//accepts a value to be added to the binary tree
+	
+	//search
+	bool search(const T& value, vertex& found);
 
 private:
 	std::vector<vertex*> vertices;//is a vector of pointers to vertices,
@@ -32,6 +35,8 @@ private:
 
 	//parent is a reference to a POINTER to a VERTEX
 	void _insertRecursive(vertex*& curParent, const T& value);
+
+	bool searchRecursive(vertex*& curParent, const T& value, vertex& found);
 
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
@@ -105,4 +110,26 @@ void tBinaryTree<T>::_insertRecursive(vertex*& curParent, const T& value) {
 		_insertRecursive(root->right, value);//replaces curParent with value that is to the right of current root/parent
 	}
 
+}
+
+template<typename T>
+bool tBinaryTree<T>::search(const T& value, vertex& found) {
+	searchRecursive(root, value);
+}
+
+template<typename T>
+bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& found) {
+	if (curParent->data == value) {//if value is found
+		return value;
+	}
+	else if (curParent->data < value) {//if target value bigger
+		searchRecursive(root->right, value);
+	}
+	else if (curParent->data > value) {//if target value smaller
+		searchRecursive(root->left, value);
+	}
+	else {//if value not found anywhere in tree
+		std::cout << "Not Found" << std::endl;
+		return value;
+	}
 }

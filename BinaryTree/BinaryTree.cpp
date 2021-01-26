@@ -11,6 +11,8 @@ int main()
     numTree.insert(21);
     numTree.insert(12);
 
+    //numTree.search(9);
+
     return 0;
 }
 
