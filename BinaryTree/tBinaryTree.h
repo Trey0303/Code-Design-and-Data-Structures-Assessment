@@ -22,7 +22,15 @@ public:
 	};
 
 	tBinaryTree();//constructs the tree and initializes its data members
-	~tBinaryTree();//destructs the tree, cleaning up its data members
+
+	//Rule of three
+	tBinaryTree(const tBinaryTree& other);//copy constructor(can make a copy of something)
+
+	// example: lista = listb
+	tBinaryTree& operator=(const tBinaryTree& rhs);//copy assignment operator(overwrites data something with data of another thing)
+
+	//destructs the tree, cleaning up its data members
+	~tBinaryTree();//destructor(deletes data)
 
 	void insert(const T& value);//accepts a value to be added to the binary tree
 	
@@ -46,6 +54,41 @@ private:
 template<typename T>
 tBinaryTree<T>::tBinaryTree() {
 	root = nullptr;
+}
+
+template<typename T>
+tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/list
+	vertex* curRoot = other.root;//create a new tree
+	vertex* curLeft = nullptr;
+	vertex* curRight = nullptr;
+
+	while (curRoot != nullptr) {
+		vertex* copyNode = new vertex();//create new empty node
+		copyNode->data = curRoot->data;//copy current node into empty node
+		copyNode->left = curLeft;
+		copyNode->right = curRight;
+
+		while (copyNode->left != other.left) {// until both left and right matches original
+			if (other.root->left != nullptr) {//if original is not null
+				copyNode->left = other.root->left;//copy over next node
+				curRoot = curRoot->left;//moves on to next node
+			}
+			else if (other.root->right != nullptr) {//if original is not null
+				copyNode->right = other.root->right;//copy over next node
+				curRoot = curRoot->right;//moves on to next node
+			}
+			else if (other.root->left != nullptr && other.root->right == nullptr) {
+				curRoot = curRoot->left;//left of curRoot should be null
+			}
+		}
+
+	}
+
+}
+
+template<typename T>
+tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
+
 }
 
 template<typename T>
@@ -148,7 +191,7 @@ bool tBinaryTree<T>::search(const T& value, vertex& found) {
 template<typename T>
 bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& found, bool valFound) {
 	if (curParent->data == value) {//if value is found
-		//found = value;//makes found a copy of vertex value?
+		//found = curParent->data;//makes found a copy of vertex value?
 		valFound = true;
 		return valFound;//return true
 	}
