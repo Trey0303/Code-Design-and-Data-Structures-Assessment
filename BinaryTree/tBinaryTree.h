@@ -62,7 +62,7 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 	vertex* curLeft = nullptr;
 	vertex* curRight = nullptr;
 
-	while (curRoot != nullptr) {
+	while (other.root != nullptr) {
 		vertex* copyNode = new vertex();//create new empty node
 		copyNode->data = curRoot->data;//copy current node into empty node
 		copyNode->left = curLeft;
@@ -72,17 +72,22 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 			if (other.root->left != nullptr) {//if original is not null
 				copyNode->left = other.root->left;//copy over next node
 				curRoot = curRoot->left;//moves on to next node
+				other.root = other.root->left;
 			}
 			else if (other.root->right != nullptr) {//if original is not null
 				copyNode->right = other.root->right;//copy over next node
 				curRoot = curRoot->right;//moves on to next node
+				other.root = other.root->right;
 			}
 			else if (other.root->left != nullptr && other.root->right == nullptr) {
 				curRoot = curRoot->left;//left of curRoot should be null
+				other.root = other.root->left;
 			}
+			
 		}
 
 	}
+	
 
 }
 
