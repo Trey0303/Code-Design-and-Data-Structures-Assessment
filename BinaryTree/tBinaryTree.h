@@ -18,6 +18,10 @@ public:
 		bool hasLeft() const;//a helper function, should return true if a child is present, otherwise false
 		bool hasRight() const;//a helper function, should return true if a child is present, otherwise false
 
+		int getSize() {
+
+		}
+
 		vertex();//a default constructor that initializes its data members
 	};
 
@@ -68,20 +72,20 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 		copyNode->left = curLeft;
 		copyNode->right = curRight;
 
-		while (copyNode->left != other.left) {// until both left and right matches original
-			if (other.root->left != nullptr) {//if original is not null
-				copyNode->left = other.root->left;//copy over next node
+		while (copyNode->left != other->left) {// until both left and right matches original
+			if (other->left != nullptr) {//if original is not null
+				copyNode->left = other->left;//copy over next node
 				curRoot = curRoot->left;//moves on to next node
-				other.root = other.root->left;
+				other = other->left;
 			}
-			else if (other.root->right != nullptr) {//if original is not null
-				copyNode->right = other.root->right;//copy over next node
+			else if (other->right != nullptr) {//if original is not null
+				copyNode->right = other->right;//copy over next node
 				curRoot = curRoot->right;//moves on to next node
-				other.root = other.root->right;
+				other = other->right;
 			}
-			else if (other.root->left != nullptr && other.root->right == nullptr) {
+			else if (other->left != nullptr && other->right == nullptr) {
 				curRoot = curRoot->left;//left of curRoot should be null
-				other.root = other.root->left;
+				other = other->left;
 			}
 			
 		}
