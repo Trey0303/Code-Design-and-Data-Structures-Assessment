@@ -70,7 +70,7 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 	vertex* curRight = nullptr;
 
 	while (other.root != nullptr) {
-		tBinaryTreeRecursive(other.root);
+		tBinaryTreeRecursive(root, other);
 
 	}
 	
@@ -79,25 +79,25 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 
 template<typename T>
 void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other) {
-	vertex* copyNode = new vertex();//create new empty node
-	copyNode->data = curRoot->data;//copy current node into empty node
-	copyNode->left = curLeft;//sets left copy to null
-	copyNode->right = curRight;//sets right copy to null
+	//vertex* copyNode = new vertex();//create new empty node
+	//copyNode->data = curParent->data;//copy current node into empty node
+	//copyNode->left = curLeft;//sets left copy to null
+	//copyNode->right = curRight;//sets right copy to null
 
-	while (copyNode->left != other->left && copyNode->right != original->right) {// until both left and right matches original
-		if (other->left != nullptr) {//if original is not null
-			tBinaryTreeRecursive(other.root->left);
-		}
-		else if (other->right != nullptr) {//if original is not null
-			tBinaryTreeRecursive(other.root->right);
-		}
-		else {
+	//while (copyNode->left != other->left && copyNode->right != original->right) {// until both left and right matches original
+	//	if (other->left != nullptr) {//if original is not null
+	//		tBinaryTreeRecursive(other.root->left);
+	//	}
+	//	else if (other->right != nullptr) {//if original is not null
+	//		tBinaryTreeRecursive(other.root->right);
+	//	}
+	//	else {
 
-		}
+	//	}
 
-	}
-	curRoot = curRoot->left;//left of curRoot should be null
-	other = other->left;
+	//}
+	//curRoot = curRoot->left;//left of curRoot should be null
+	//other = other->left;
 }
 
 //overwrites tree
