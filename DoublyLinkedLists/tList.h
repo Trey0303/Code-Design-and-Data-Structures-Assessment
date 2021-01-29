@@ -34,6 +34,11 @@ public:
 	const T& back() const;
 
 	void remove(const T& val);//removes all nodes equal to the given value
+
+	//utility
+	bool empty() const;//return true if there are no elements
+	void clear();//destroy every single node in the linked list
+	void resize(size_t newSize);//resize the linked list to contain the given number of elements
 };
 
 template <typename T>
@@ -274,6 +279,7 @@ void tList<T>::remove(const T& val) {
 
 			curNode = nullptr;//make curNode null
 			delete curNode;//delete curNode
+			curNode = head;//start the search over to see if are anymore node needed to be removed
 
 		}
 		//moves on to next node
@@ -282,6 +288,54 @@ void tList<T>::remove(const T& val) {
 		}
 		else {
 			std::cout << "couldnt be found" << std::endl;
+		}
+	}
+}
+
+template <typename T>
+bool tList<T>::empty() const{
+	if (head == nullptr) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+template <typename T>
+void tList<T>::clear() {
+	while (head != nullptr) {//loop until is null
+		node* oldtail = tail;
+		//note:if tail is null,things will break
+		tail = oldtail->prev;
+
+		if (tail != nullptr) {
+			tail->next = nullptr;
+		}
+		else {
+			head = nullptr;
+		}
+
+		delete oldtail;
+	}
+}
+
+template <typename T>
+void tList<T>::resize(size_t newSize) {
+	int count = 0;
+
+	while (count != newSize) {
+		count = 0;
+		node* curNode = head;
+		while (curNode != nullptr) {//until curNode went through the whole list
+			count++;
+			curNode = curNode->next;
+		}
+		if (count < newSize) {//if list is smaller than new size
+			push_back(7);
+		}
+		else if(count > newSize) {//if list is bigger than new size
+			pop_back();
 		}
 	}
 }

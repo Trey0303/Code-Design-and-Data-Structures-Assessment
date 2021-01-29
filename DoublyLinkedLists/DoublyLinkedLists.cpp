@@ -49,10 +49,29 @@ int main()
 
     removeNum.push_front(11);//tail
     removeNum.push_front(15);
+    removeNum.push_front(15);
     removeNum.push_front(31);
     removeNum.push_front(4);//head
 
-    removeNum.remove(15);
+    removeNum.remove(15);//remove 15 from list
+
+    std::cout << removeNum.empty() << std::endl;//0 = false
+
+    removeNum.clear();
+
+    std::cout << removeNum.empty() << std::endl;//1 = true
+
+    tList<int> resizeList;
+
+    resizeList.push_front(7);//tail
+    resizeList.push_front(5);
+    resizeList.push_front(1);
+    resizeList.push_front(3);
+    resizeList.push_front(4);//head
+
+    resizeList.resize(8);//grow
+
+    resizeList.resize(2);//shrink
 
     return 0;
 }
