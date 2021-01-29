@@ -100,6 +100,8 @@ public:
 			return oldIter;
 		}
 
+		
+
 	};
 
 	//returns an iterator pointing to the first node
@@ -110,6 +112,53 @@ public:
 	//returns an iterator pointing to after the last node
 	iterator end() {
 		return iterator(tail->next);
+	}
+
+	//inserts a new node after the given position
+	//
+	//the new node shall contain the value given to 'val'
+	iterator insert(const iterator& it, const T& val) {
+		node* curNode = head;
+		node* prevNode = nullptr;//to keep track of removeNodes prev node
+		node* nextNode = nullptr;//to keep track of removeNodes next node
+		while (curNode != nullptr) {
+			prevNode = curNode->prev;//updates prevNode to be one node behind removeNode
+			nextNode = curNode->next;
+
+			//deletes node
+			if (curNode->data == val) {//if value found in list
+				prevNode->next = curNode->next;//make prev nodes next point to current nodes next
+				nextNode->prev = curNode->prev;//make next nodes next point to current nodes prev
+
+
+
+				//add new node curNode
+				node* newNode = new node();
+				curNode->data = val;//assign curNode a value
+				//curNode->newNode
+				curNode->next = newNode;//make newNode be the next node to curNode
+				//curNode->newNode<-nextNode
+				nextNode->prev = newNode;//make newNode be the prev node to curNode
+				//curNode<-->newNode<-nextNode
+				newNode->prev = curNode;
+				//curNode<-->newNode<-->nextNode
+				newNode->next = nextNode;
+
+				if (curNode == tail) {//if node added as the new last node
+					tail = curNode->prev;//update tail
+				}
+
+			}
+			//moves on to next node
+			else if (curNode != nullptr) {
+				curNode = curNode->next;
+			}
+			else {
+				std::cout << "couldnt be found" << std::endl;
+			}
+		}
+
+		return *this;
 	}
 
 };
@@ -347,7 +396,7 @@ void tList<T>::remove(const T& val) {
 				head = curNode->next;//update head
 			}
 			else if (curNode == tail) {//if node being deleted is the tail
-				head = curNode->prev;//update tail
+				tail = curNode->prev;//update tail
 			}
 
 			curNode = nullptr;//make curNode null
@@ -412,15 +461,3 @@ void tList<T>::resize(size_t newSize) {
 		}
 	}
 }
-
-//template <typename T>
-//tList<T>::iterator tList<T>::begin() {
-//	/*iterator curHead = head;
-//	return curHead;*/
-//}
-//
-//template <typename T>
-//tList<T>::iterator tList<T>::end() {
-//	/*iterator curTail = tail->next;
-//	return curTail;*/
-//}

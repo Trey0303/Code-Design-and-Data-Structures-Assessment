@@ -85,5 +85,7 @@ int main()
         std::cout << (*it) << std::endl;
     }
 
+    things.insert(things.begin(), 1);
+
     return 0;
 }
