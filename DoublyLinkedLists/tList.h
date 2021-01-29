@@ -39,6 +39,81 @@ public:
 	bool empty() const;//return true if there are no elements
 	void clear();//destroy every single node in the linked list
 	void resize(size_t newSize);//resize the linked list to contain the given number of elements
+
+	class iterator {
+		//current node being operated upon
+		node* cur;
+
+	public:
+		//initializes an empty iterator pointing to null
+		iterator() {
+			cur = 0;
+		}
+		//initializes an iterator pointing to the given node
+		iterator(node* startNode) {
+			cur = startNode;
+		}
+
+		//return true if the iterator points to the same node
+		bool operator==(const iterator& rhs) const {
+			return rhs.cur == cur;
+		}
+
+		//return false if the iterator does not point to the same node
+		bool operator!=(const iterator& rhs) const {
+			return !(this == rhs);
+		}
+
+		//return a reference to the element pointed to by the current node
+		T& operator*() const {
+
+		}
+
+		//pre-increment
+		//(returns a reference to this iterator after it is incremented)
+		iterator& operator++() {
+			cur++;
+			return *this;
+		}
+
+		//post-increment
+		//(returns an iterator to current while incrementing the existing it)
+		iterator operator++(int) {
+			++cur;
+			iterator oldIter(this, cur - 1);
+
+			return oldIter;
+		}
+
+		//pre-decrement
+		//(returns a reference to this iterator after it is decremented)
+		iterator& operator--() {
+			cur--;
+			return *this;
+		}
+
+		//post-decrement
+		//(return an iterator to current while decrementing the existing it)
+		iterator operator--(int) {
+			--cur;
+			iterator oldIter(this, cur + 1);
+
+			return oldIter;
+		}
+
+	};
+
+	//returns an iterator pointing to the first node
+	iterator begin() {
+		return head->data;//return the head which is in the front of the list
+	}
+
+	//returns an iterator pointing to after the last node
+	iterator end() {
+		node* afterTail = tail->data;
+		return afterTail;
+	}
+
 };
 
 template <typename T>
