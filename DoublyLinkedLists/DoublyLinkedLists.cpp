@@ -73,5 +73,17 @@ int main()
 
     resizeList.resize(2);//shrink
 
+    tList<int> things;
+
+    things.push_front(7);//tail
+    things.push_front(5);
+    things.push_front(1);
+    things.push_front(3);
+    things.push_front(4);//head
+
+    for (auto it = things.begin(); it != things.end(); ++it) {
+        std::cout << (*it) << std::endl;
+    }
+
     return 0;
 }

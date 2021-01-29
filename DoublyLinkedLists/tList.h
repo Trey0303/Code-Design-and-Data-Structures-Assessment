@@ -61,12 +61,12 @@ public:
 
 		//return false if the iterator does not point to the same node
 		bool operator!=(const iterator& rhs) const {
-			return !(this == rhs);
+			return !(*this == rhs);
 		}
 
 		//return a reference to the element pointed to by the current node
 		T& operator*() const {
-
+			return cur->data;
 		}
 
 		//pre-increment
@@ -105,13 +105,12 @@ public:
 
 	//returns an iterator pointing to the first node
 	iterator begin() {
-		return head->data;//return the head which is in the front of the list
+		return head->data/*iterator(this, head)*/;
 	}
 
 	//returns an iterator pointing to after the last node
 	iterator end() {
-		node* afterTail = tail->data;
-		return afterTail;
+		return tail->next/*iterator(this,tail->next)*/;
 	}
 
 };
