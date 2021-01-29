@@ -223,6 +223,7 @@ bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex&
 	else {//if value not found anywhere in tree
 		std::cout << "Not Found" << std::endl;
 		valFound = false;
-		return valFound;//return false
+		
 	}
+	return valFound;//return false
 }

@@ -4,13 +4,13 @@
 int main()
 {
     //negative numbers wont work with this type(uint32_t)
-    uint32_t firstHash = hash<uint32_t>(1);
+    uint32_t firstHash = hash<uint32_t>(5);
     uint32_t secondHash = hash<uint32_t>(2);
     uint32_t thirdHash = hash<uint32_t>(4);
 
     //specializing for comman types
     //int
-    uint32_t eighthHash = hash<int>(1);
+    uint32_t eighthHash = hash<int>(5);
     uint32_t ninthHash = hash<int>(2);
     uint32_t tenthHash = hash<int>(4);
 
@@ -30,7 +30,7 @@ int main()
     uint32_t floatThree = hash<float>(6.0f);
 
     //string
-    uint32_t firstWord = hash("GFG");
+    uint32_t firstWord = hash("words");
 
     return 0;
 }

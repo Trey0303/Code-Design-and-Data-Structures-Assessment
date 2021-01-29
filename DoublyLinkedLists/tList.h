@@ -29,6 +29,11 @@ public:
 
 	T& front(); //returns the element at the head/front
 	T& back(); //returns the element at the tail/back
+
+	const T& front() const;
+	const T& back() const;
+
+	void remove(const T& val);//removes all nodes equal to the given value
 };
 
 template <typename T>
@@ -234,4 +239,49 @@ T& tList<T>::front() {//similar to back()
 template <typename T>
 T& tList<T>::back() {//similar to front()
 	return tail->data;//returns data stored in the back
+}
+
+template <typename T>
+const T& tList<T>::front() const {//similar to back()
+	return head->data;//return the head which is in the front of the list
+}
+
+template <typename T>
+const T& tList<T>::back() const {//similar to front()
+	return tail->data;//returns data stored in the back
+}
+
+template <typename T>
+void tList<T>::remove(const T& val) {
+	node* curNode = head;
+	node* prevNode = nullptr;//to keep track of removeNodes prev node
+	node* nextNode = nullptr;//to keep track of removeNodes next node
+	while (curNode != nullptr) {
+		prevNode = curNode->prev;//updates prevNode to be one node behind removeNode
+		nextNode = curNode->next;
+
+		//deletes node
+		if (curNode->data == val) {//if value found in list
+			prevNode->next = curNode->next;//make prev nodes next point to current nodes next
+			nextNode->prev = curNode->prev;//make next nodes next point to current nodes prev
+			
+			if (curNode == head) {//if node being deleted is the head
+				head = curNode->next;//update head
+			}
+			else if (curNode == tail) {//if node being deleted is the tail
+				head = curNode->prev;//update tail
+			}
+
+			curNode = nullptr;//make curNode null
+			delete curNode;//delete curNode
+
+		}
+		//moves on to next node
+		else if(curNode != nullptr){
+			curNode = curNode->next;
+		}
+		else {
+			std::cout << "couldnt be found" << std::endl;
+		}
+	}
 }

@@ -45,5 +45,14 @@ int main()
 
     otherNum = someNum;
 
+    tList<int> removeNum;
+
+    removeNum.push_front(11);//tail
+    removeNum.push_front(15);
+    removeNum.push_front(31);
+    removeNum.push_front(4);//head
+
+    removeNum.remove(15);
+
     return 0;
 }
