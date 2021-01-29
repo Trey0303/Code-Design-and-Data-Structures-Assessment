@@ -105,12 +105,14 @@ public:
 
 	//returns an iterator pointing to the first node
 	iterator begin() {
-		return head->data/*iterator(this, head)*/;
+		iterator curHead = head;
+		return curHead;
 	}
 
 	//returns an iterator pointing to after the last node
 	iterator end() {
-		return tail->next/*iterator(this,tail->next)*/;
+		iterator curTail = tail->next;
+		return curTail;
 	}
 
 };
