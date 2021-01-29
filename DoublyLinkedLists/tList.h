@@ -42,9 +42,12 @@ public:
 
 	class iterator {
 		//current node being operated upon
-		node* cur;
+		//node* cur;
 
 	public:
+
+		node* cur;
+
 		//initializes an empty iterator pointing to null
 		iterator() {
 			cur = 0;
@@ -114,51 +117,58 @@ public:
 		return iterator(tail->next);
 	}
 
+	/*iterator getPosition(const iterator& it, node* curNode) {
+		curNode = cur;
+		return curNode;
+	}*/
+
 	//inserts a new node after the given position
 	//
 	//the new node shall contain the value given to 'val'
 	iterator insert(const iterator& it, const T& val) {
-		node* curNode = head;
-		node* prevNode = nullptr;//to keep track of removeNodes prev node
-		node* nextNode = nullptr;//to keep track of removeNodes next node
-		while (curNode != nullptr) {
-			prevNode = curNode->prev;//updates prevNode to be one node behind removeNode
-			nextNode = curNode->next;
+		
+		//while (curNode != nullptr) {
+			//prevNode = curNode->prev;//updates prevNode to be one node behind removeNode
+			//nextNode = curNode->next;
 
 			//deletes node
-			if (curNode->data == val) {//if value found in list
-				prevNode->next = curNode->next;//make prev nodes next point to current nodes next
-				nextNode->prev = curNode->prev;//make next nodes next point to current nodes prev
+			//if (curNode->data == it->data) {//if value found in list
+				//prevNode->next = curNode->next;//make prev nodes next point to current nodes next
+		//nextNode->prev = curNode->prev;//make next nodes next point to current nodes prev
+
+		node* curNode = it.cur;
+		//node* prevNode = nullptr;//to keep track of removeNodes prev node
+		node* nextNode = curNode->next;//to keep track of removeNodes next node
 
 
+		//add new node curNode
+		node* newNode = new node();
+		newNode->data = val;//assign newNode a value
+		//curNode->newNode
+		curNode->next = newNode;//make newNode be the next node to curNode
+		//curNode->newNode<-nextNode
+		nextNode->prev = newNode;//make newNode be the prev node to curNode
+		//curNode<-->newNode<-nextNode
+		newNode->prev = curNode;
+		//curNode<-->newNode<-->nextNode
+		newNode->next = nextNode;
 
-				//add new node curNode
-				node* newNode = new node();
-				curNode->data = val;//assign curNode a value
-				//curNode->newNode
-				curNode->next = newNode;//make newNode be the next node to curNode
-				//curNode->newNode<-nextNode
-				nextNode->prev = newNode;//make newNode be the prev node to curNode
-				//curNode<-->newNode<-nextNode
-				newNode->prev = curNode;
-				//curNode<-->newNode<-->nextNode
-				newNode->next = nextNode;
-
-				if (curNode == tail) {//if node added as the new last node
-					tail = curNode->prev;//update tail
-				}
-
-			}
-			//moves on to next node
-			else if (curNode != nullptr) {
-				curNode = curNode->next;
-			}
-			else {
-				std::cout << "couldnt be found" << std::endl;
-			}
+		if (curNode == tail) {//if node added as the new last node
+			tail = newNode;//update tail
 		}
+				
+		return newNode;
+		//	//}
+		//	//moves on to next node
+		//	else if (curNode != nullptr) {
+		//		curNode = curNode->next;
+		//	}
+		//	else {
+		//		std::cout << "couldnt be found" << std::endl;
+		//	}
+		//}
 
-		return *this;
+		//return nullptr;
 	}
 
 };
