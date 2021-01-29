@@ -72,31 +72,30 @@ public:
 		//pre-increment
 		//(returns a reference to this iterator after it is incremented)
 		iterator& operator++() {
-			cur++;
+			cur = cur->next;
 			return *this;
 		}
 
 		//post-increment
 		//(returns an iterator to current while incrementing the existing it)
 		iterator operator++(int) {
-			++cur;
-			iterator oldIter(this, cur - 1);
-
-			return oldIter;
+			iterator oldCur(cur);
+			cur = cur->next;
+			return oldCur;
 		}
 
 		//pre-decrement
 		//(returns a reference to this iterator after it is decremented)
 		iterator& operator--() {
-			cur--;
+			cur = cur->prev;
 			return *this;
 		}
 
 		//post-decrement
 		//(return an iterator to current while decrementing the existing it)
 		iterator operator--(int) {
-			--cur;
-			iterator oldIter(this, cur + 1);
+			cur = cur->prev;
+			iterator oldIter(cur->next);
 
 			return oldIter;
 		}
@@ -105,14 +104,12 @@ public:
 
 	//returns an iterator pointing to the first node
 	iterator begin() {
-		iterator curHead = head;
-		return curHead;
+		return iterator(head);
 	}
 
 	//returns an iterator pointing to after the last node
 	iterator end() {
-		iterator curTail = tail->next;
-		return curTail;
+		return iterator(tail->next);
 	}
 
 };
@@ -415,3 +412,15 @@ void tList<T>::resize(size_t newSize) {
 		}
 	}
 }
+
+//template <typename T>
+//tList<T>::iterator tList<T>::begin() {
+//	/*iterator curHead = head;
+//	return curHead;*/
+//}
+//
+//template <typename T>
+//tList<T>::iterator tList<T>::end() {
+//	/*iterator curTail = tail->next;
+//	return curTail;*/
+//}
