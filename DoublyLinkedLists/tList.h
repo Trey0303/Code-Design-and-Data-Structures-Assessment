@@ -117,28 +117,12 @@ public:
 		return iterator(tail->next);
 	}
 
-	/*iterator getPosition(const iterator& it, node* curNode) {
-		curNode = cur;
-		return curNode;
-	}*/
-
 	//inserts a new node after the given position
 	//
 	//the new node shall contain the value given to 'val'
 	iterator insert(const iterator& it, const T& val) {
-		
-		//while (curNode != nullptr) {
-			//prevNode = curNode->prev;//updates prevNode to be one node behind removeNode
-			//nextNode = curNode->next;
-
-			//deletes node
-			//if (curNode->data == it->data) {//if value found in list
-				//prevNode->next = curNode->next;//make prev nodes next point to current nodes next
-		//nextNode->prev = curNode->prev;//make next nodes next point to current nodes prev
-
-		node* curNode = it.cur;
-		//node* prevNode = nullptr;//to keep track of removeNodes prev node
-		node* nextNode = curNode->next;//to keep track of removeNodes next node
+		node* curNode = it.cur;//helps curNode know where 'it' is pointing to
+		node* nextNode = curNode->next;
 
 
 		//add new node curNode
@@ -158,17 +142,6 @@ public:
 		}
 				
 		return newNode;
-		//	//}
-		//	//moves on to next node
-		//	else if (curNode != nullptr) {
-		//		curNode = curNode->next;
-		//	}
-		//	else {
-		//		std::cout << "couldnt be found" << std::endl;
-		//	}
-		//}
-
-		//return nullptr;
 	}
 
 };

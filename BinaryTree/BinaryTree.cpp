@@ -14,11 +14,21 @@ int main()
     numTree.insert(19);
 
     tBinaryTree<int>::vertex searchNum;//this is for finding the vertex
-    numTree.search(9, searchNum);//search tree using 9 and return vertex for found value
+    numTree.search(21, searchNum);//search tree using 9 and return vertex for found value
+
+    //numTree.~tBinaryTree();
 
     tBinaryTree<int> copyTree(numTree);
 
+    tBinaryTree<int> copyOfACopy(copyTree);
 
+    copyTree.insert(7);
+    copyTree.insert(8);
+    copyTree.insert(25);
+    copyTree.insert(30);
+
+    //overwrites copyTree with copyOfACopy data
+    copyTree = copyOfACopy;
 
     return 0;
 }

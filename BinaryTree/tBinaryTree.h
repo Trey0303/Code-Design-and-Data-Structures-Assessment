@@ -65,24 +65,32 @@ tBinaryTree<T>::tBinaryTree() {
 //copys tree
 template<typename T>
 tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/list
-	vertex* curRoot = other.root;//create a new tree
-	vertex* curLeft = nullptr;
-	vertex* curRight = nullptr;
+	//vertex* curRoot = new vertex();//create a new tree
+	//vertex* curLeft = nullptr;
+	//vertex* curRight = nullptr;
 
-	while (other.root != nullptr) {
-		tBinaryTreeRecursive(root, other);
+	tBinaryTreeRecursive(root, other);
 
-	}
 	
 
 }
 
 template<typename T>
 void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other) {
-	//vertex* copyNode = new vertex();//create new empty node
-	//copyNode->data = curParent->data;//copy current node into empty node
-	//copyNode->left = curLeft;//sets left copy to null
-	//copyNode->right = curRight;//sets right copy to null
+	if (curParent != nullptr) {
+		vertex* copyNode = new vertex();//create new empty node
+		copyNode->data = curParent->data;//copy current node into empty node
+		//copyNode->left = nullptr;//sets left copy to null
+		//copyNode->right = nullptr;//sets right copy to null
+
+		if (curParent->left != nullptr) {
+			tBinaryTreeRecursive(curParent->left, other);
+		}
+		if (curParent->right != nullptr) {
+			tBinaryTreeRecursive(curParent->right, other);
+		}
+	}
+
 
 	//while (copyNode->left != other->left && copyNode->right != original->right) {// until both left and right matches original
 	//	if (other->left != nullptr) {//if original is not null
@@ -104,9 +112,16 @@ void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree&
 template<typename T>
 tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 	//delete old data
-	~tBinaryTree();
+	//delete all vertices
+	while (root != nullptr) {//while tree not clear
+		clearTree(root);
+
+	}
 
 	//overwrite with new data
+	tBinaryTree();
+
+	return *this;
 }
 
 //deletes tree
@@ -209,21 +224,25 @@ bool tBinaryTree<T>::search(const T& value, vertex& found) {
 
 template<typename T>
 bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& found, bool valFound) {
-	if (curParent->data == value) {//if value is found
-		//found = curParent->data;//makes found a copy of vertex value?
-		valFound = true;
-		return valFound;//return true
-	}
-	else if (curParent->data < value) {//if target value bigger
-		searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
-	}
-	else if (curParent->data > value) {//if target value smaller
-		searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
+	if (curParent != nullptr) {
+		if (curParent->data == value) {//if value is found
+			//found = curParent->data;//makes found a copy of vertex value?
+			valFound = true;
+			std::cout << "true" << std::endl;
+			return valFound;//return true
+		}
+		else if (curParent->data < value) {//if target value bigger
+			searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
+		}
+		else if (curParent->data > value) {//if target value smaller
+			searchRecursive(curParent->left, value, found, valFound);//recall function with updated root
+		}
+
 	}
 	else {//if value not found anywhere in tree
-		std::cout << "Not Found" << std::endl;
+		std::cout << "false" << std::endl;
 		valFound = false;
+		return valFound;//return false
 		
 	}
-	return valFound;//return false
 }
