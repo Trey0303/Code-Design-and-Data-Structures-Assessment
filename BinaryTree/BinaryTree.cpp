@@ -39,9 +39,9 @@ int main()
     //overwrites copyTree with copyOfACopy data
     //copyTree = copyOfACopy;//copy assignment
 
-    //copyTree.printPreOrder();//14,7,5,4,6,9,8,10,21,19,18,20,24,23,50
+    copyTree.printPreOrder();//14,7,5,4,6,9,8,10,21,19,18,20,24,23,50
     copyTree.printPostOrder();//4,6,5,8,10,9,7,18,20,19,23,50,24,21,14
-    //copyTree.printInOrder();//4,5,6,7,8,9,10,14,18,19,20,21,23,24,50
+    copyTree.printInOrder();//4,5,6,7,8,9,10,14,18,19,20,21,23,24,50
 
     return 0;
 }
