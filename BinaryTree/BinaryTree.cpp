@@ -22,7 +22,7 @@ int main()
     numTree.insert(6);
 
     tBinaryTree<int>::vertex searchNum;//this is for finding the vertex
-    numTree.search(21, searchNum);//search tree using 9 and return vertex for found value
+    //numTree.search(21, searchNum);//search tree using 9 and return vertex for found value
 
 
     tBinaryTree<int> copyTree(numTree);//copy constructor
