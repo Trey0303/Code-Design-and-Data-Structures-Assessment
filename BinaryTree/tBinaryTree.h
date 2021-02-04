@@ -69,6 +69,8 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 	//vertex* curLeft = nullptr;
 	//vertex* curRight = nullptr;
 
+	root = other.root;//set root to the root of the tree getting copied
+
 	tBinaryTreeRecursive(root, other);
 
 	
@@ -77,18 +79,20 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 
 template<typename T>
 void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other) {
+	
 	if (curParent != nullptr) {
 		vertex* copyNode = new vertex();//create new empty node
 		copyNode->data = curParent->data;//copy current node into empty node
 		//copyNode->left = nullptr;//sets left copy to null
 		//copyNode->right = nullptr;//sets right copy to null
 
-		if (curParent->left != nullptr) {
-			tBinaryTreeRecursive(curParent->left, other);
-		}
-		if (curParent->right != nullptr) {
-			tBinaryTreeRecursive(curParent->right, other);
-		}
+		//if (curParent->left != nullptr) {
+		tBinaryTreeRecursive(curParent->left, other);
+		//}
+		//if (curParent->right != nullptr) {
+		tBinaryTreeRecursive(curParent->right, other);
+		//}
+
 	}
 
 
@@ -119,7 +123,6 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 	}
 
 	//overwrite with new data
-	tBinaryTree();
 
 	return *this;
 }
