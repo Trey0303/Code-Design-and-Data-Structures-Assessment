@@ -254,7 +254,7 @@ void tBinaryTree<T>::_insertRecursive(vertex*& curParent, const T& value) {
 //	return valFound;
 //}
 
-template<typename T>
+//template<typename T>
 //bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& *found, bool valFound) {
 //	if (curParent != nullptr) {
 //		if (curParent->data == value) {//if value is found
@@ -281,19 +281,20 @@ template<typename T>
 
 template<typename T>
 void tBinaryTree<T>::printPreOrder() {
-	printPreOrderR(root);
+	if (root != nullptr) {
+		printPreOrderR(root);
+	}
+
+	std::cout << std::endl;
 }
 template<typename T>
 void tBinaryTree<T>::printPreOrderR(vertex*& curParent) {
 	
 	
-	if (curParent->left != nullptr) {//print left second
-		std::cout << curParent->data << std::endl;//print root first
+	std::cout << curParent->data << ", ";
+	
+	if (curParent->left != nullptr) {
 		printPreOrderR(curParent->left);
-	}
-
-	if (curParent->right == nullptr) {//print right third
-		std::cout << curParent->data << std::endl;//print current root
 	}
 
 	if (curParent->right != nullptr) {
@@ -303,7 +304,11 @@ void tBinaryTree<T>::printPreOrderR(vertex*& curParent) {
 
 template<typename T>
 void tBinaryTree<T>::printPostOrder() {
-	printPostOrderR(root);
+	if (root != nullptr) {
+		printPostOrderR(root);
+	}
+
+	std::cout << std::endl;
 }
 
 template<typename T>
@@ -312,31 +317,32 @@ void tBinaryTree<T>::printPostOrderR(vertex*& curParent) {
 	if (curParent->left != nullptr) {
 		printPostOrderR(curParent->left);
 	}
-	
-	if (curParent->left == nullptr && curParent->right == nullptr) {//print left first
-		std::cout << curParent->data << std::endl;//print root last
-
-	}
-
 	if (curParent->right != nullptr) {
-		printInOrderR(curParent->right);//print right
+		printPostOrderR(curParent->right);
 	}
+	std::cout << curParent->data << ", ";//print only when currnt root is not null
+
+
 }
 
 template<typename T>
 void tBinaryTree<T>::printInOrder() {
-	printInOrderR(root);
+	if (root != nullptr) {
+		printInOrderR(root);
+	}
+
+	std::cout << std::endl;
 }
 
 template<typename T>
 void tBinaryTree<T>::printInOrderR(vertex*& curParent) {
-	if (curParent->left != nullptr) {//print left first
+	if (curParent->left != nullptr) {
 		printInOrderR(curParent->left);
 	}
-	std::cout << curParent->data << std::endl;//print root
+	std::cout << curParent->data << ", ";
 
 	if (curParent->right != nullptr) {
-		printInOrderR(curParent->right);//print right
+		printInOrderR(curParent->right);
 	}
 
 }
