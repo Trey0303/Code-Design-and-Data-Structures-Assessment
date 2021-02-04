@@ -77,6 +77,9 @@ private:
 
 	bool searchRecursive(vertex*& curParent, const T& value, vertex*& found, bool valFound);
 
+	//remove
+	void removeR(vertex*& curParent, vertex*& prevParent, vertex* target);
+
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
 
@@ -354,5 +357,77 @@ bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex*
 
 template<typename T>
 void tBinaryTree<T>::remove(vertex* target) {
+	vertex* prevParent;
+	
+	if (root != nullptr) {
+		removeR(root, prevParent, target);
 
+	}
+	else {
+		std::cout << "theres nothing to remove" << std::endl;
+	}
+}
+
+template<typename T>
+void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* target) {
+	
+
+	//update prev parent
+	if (curParent->data != target->data) {
+		if (curParent->data < target->data) {//if target value bigger
+			prevParent = curParent;
+			removeR(curParent->right, prevParent, target);
+		}
+		else if (curParent->data > target->data) {//if target value smaller
+			prevParent = curParent;
+			removeR(curParent->left, prevParent, target);
+		}
+	}
+	
+	if (curParent->data == target->data) {
+		//if vertex has no child
+		if (curParent->left == nullptr && curParent->right == nullptr) {
+			//delete target
+			curParent = nullptr;
+			delete curParent;
+		}
+		//if vertex has two children
+		else if (curParent->left != nullptr && curParent->right != nullptr) {
+			//move right child as a replacement for curParent
+			prevParent->right = curParent->right;
+			//curParent = curParent->right;
+
+			//delete target
+			//curParent->right = nullptr;
+			//delete curParent->right;
+		}
+		//if vertex has one child
+		//if only has right child
+		else if (curParent->right != nullptr) {
+			//connect targets parent to targets child
+			prevParent->right = curParent->right;
+
+			//curParent->right = nullptr;
+			//delete curParent->right;
+			
+			
+		}
+		//if only has left child
+		else if (curParent->left != nullptr) {
+			
+			prevParent->left = curParent->left;
+
+			curParent->left = nullptr;
+			delete curParent->left;
+			
+		}
+
+		//dont forget to remove a vertex from the vertices 
+		//vector that holds pointers to every vertex?
+
+	}
+	/*else {
+		std::cout << "target not found" << std::endl;
+	}*/
+	
 }
