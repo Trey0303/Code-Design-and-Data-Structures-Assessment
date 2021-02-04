@@ -36,7 +36,7 @@ public:
 	void insert(const T& value);//accepts a value to be added to the binary tree
 	
 	//search                           Now is a reference to a pointer
-	//bool search(const T& value, vertex& *found);
+	bool search(const T& value, vertex*& found);
 
 
 	//pre
@@ -47,6 +47,9 @@ public:
 
 	//in Order
 	void printInOrder();
+
+	//remove
+	void remove(vertex *target);
 
 private:
 	std::vector<vertex*> vertices;//is a vector of pointers to vertices,
@@ -71,6 +74,8 @@ private:
 
 	//in Order
 	void printInOrderR(vertex*& curParent);
+
+	bool searchRecursive(vertex*& curParent, const T& value, vertex*& found, bool valFound);
 
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
@@ -247,38 +252,6 @@ void tBinaryTree<T>::_insertRecursive(vertex*& curParent, const T& value) {
 
 }
 
-//template<typename T>
-//bool tBinaryTree<T>::search(const T& value, vertex& *found) {
-//	bool valFound = false;
-//	searchRecursive(root, value, found, valFound);
-//	return valFound;
-//}
-
-//template<typename T>
-//bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex& *found, bool valFound) {
-//	if (curParent != nullptr) {
-//		if (curParent->data == value) {//if value is found
-//			//found = curParent->data;//makes found a copy of vertex value?
-//			valFound = true;
-//			std::cout << "true" << std::endl;
-//			return valFound;//return true
-//		}
-//		else if (curParent->data < value) {//if target value bigger
-//			searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
-//		}
-//		else if (curParent->data > value) {//if target value smaller
-//			searchRecursive(curParent->left, value, found, valFound);//recall function with updated root
-//		}
-//
-//	}
-//	else {//if value not found anywhere in tree
-//		std::cout << "false" << std::endl;
-//		valFound = false;
-//		return valFound;//return false
-//		
-//	}
-//}
-
 template<typename T>
 void tBinaryTree<T>::printPreOrder() {
 	if (root != nullptr) {
@@ -344,5 +317,42 @@ void tBinaryTree<T>::printInOrderR(vertex*& curParent) {
 	if (curParent->right != nullptr) {
 		printInOrderR(curParent->right);
 	}
+
+}
+
+template<typename T>
+bool tBinaryTree<T>::search(const T& value, vertex*& found) {
+	bool valFound = false;
+	searchRecursive(root, value, found, valFound);
+	return valFound;
+}
+
+template<typename T>
+bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex*& found, bool valFound) {
+	if (curParent != nullptr) {
+		if (curParent->data == value) {//if value is found
+			found = curParent;//makes found a copy of vertex value?
+			valFound = true;
+			std::cout << "true" << std::endl;
+			return valFound;//return true
+		}
+		else if (curParent->data < value) {//if target value bigger
+			searchRecursive(curParent->right, value, found, valFound);//recall function with updated root
+		}
+		else if (curParent->data > value) {//if target value smaller
+			searchRecursive(curParent->left, value, found, valFound);//recall function with updated root
+		}
+
+	}
+	else {//if value not found anywhere in tree
+		std::cout << "false" << std::endl;
+		valFound = false;
+		return valFound;//return false
+
+	}
+}
+
+template<typename T>
+void tBinaryTree<T>::remove(vertex* target) {
 
 }
