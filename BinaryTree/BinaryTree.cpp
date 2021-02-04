@@ -29,9 +29,9 @@ int main()
 
     tBinaryTree<int> copyOfACopy(copyTree);
 
-    copyTree.insert(7);
-    copyTree.insert(8);
-    copyTree.insert(25);
+    copyTree.insert(3);
+    copyTree.insert(11);
+    copyTree.insert(22);
     copyTree.insert(30);
 
     tBinaryTree<int> anotherCopy(copyTree);

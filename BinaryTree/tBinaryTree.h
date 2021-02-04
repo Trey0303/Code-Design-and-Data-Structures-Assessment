@@ -79,6 +79,7 @@ tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/
 template<typename T>
 void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other) {
 	
+
 	if (curParent != nullptr) {
 		vertex* copyNode = new vertex();//create new empty node
 		copyNode->data = curParent->data;//copy current node into empty node
@@ -97,8 +98,8 @@ void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree&
 //overwrites tree
 template<typename T>
 tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
+	
 	//delete old data
-	//delete all vertices
 	while (root != nullptr) {//while tree not clear
 		clearTree(root);
 
@@ -107,13 +108,10 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 	//overwrite with new data
 	root = rhs.root;//set root to the root of the tree getting copied
 
-	while (vertices != rhs.vertices) {
-		vertices;
-		copyAssignmentRecursive(root, rhs);
-	}
+	copyAssignmentRecursive(root, rhs);
 	
-
-	//vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
+	//update vertices
+	vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
 
 
 	return *this;
@@ -121,6 +119,8 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 
 template<typename T>
 tBinaryTree<T>& tBinaryTree<T>::copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other) {
+
+
 
 	if (curParent != nullptr) {
 		vertex* copyNode = new vertex();//create new empty node
