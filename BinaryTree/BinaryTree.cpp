@@ -34,8 +34,10 @@ int main()
     copyTree.insert(25);
     copyTree.insert(30);
 
+    tBinaryTree<int> anotherCopy(copyTree);
+
     //overwrites copyTree with copyOfACopy data
-    //copyTree = copyOfACopy;//copy assignment
+    copyTree = copyOfACopy;//copy assignment
 
     return 0;
 }

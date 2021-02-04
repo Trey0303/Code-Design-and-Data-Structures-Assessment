@@ -54,6 +54,8 @@ private:
 
 	void tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other);
 
+	tBinaryTree& copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other);
+
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
 
@@ -65,15 +67,12 @@ tBinaryTree<T>::tBinaryTree() {
 //copys tree
 template<typename T>
 tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/list
-	//vertex* curRoot = new vertex();//create a new tree
-	//vertex* curLeft = nullptr;
-	//vertex* curRight = nullptr;
 
 	root = other.root;//set root to the root of the tree getting copied
 
 	tBinaryTreeRecursive(root, other);
 
-	
+	vertices = other.vertices;//set vertices to the size/number of vertices getting copied from the original
 
 }
 
@@ -83,8 +82,6 @@ void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree&
 	if (curParent != nullptr) {
 		vertex* copyNode = new vertex();//create new empty node
 		copyNode->data = curParent->data;//copy current node into empty node
-		//copyNode->left = nullptr;//sets left copy to null
-		//copyNode->right = nullptr;//sets right copy to null
 
 		//if (curParent->left != nullptr) {
 		tBinaryTreeRecursive(curParent->left, other);
@@ -95,21 +92,6 @@ void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree&
 
 	}
 
-
-	//while (copyNode->left != other->left && copyNode->right != original->right) {// until both left and right matches original
-	//	if (other->left != nullptr) {//if original is not null
-	//		tBinaryTreeRecursive(other.root->left);
-	//	}
-	//	else if (other->right != nullptr) {//if original is not null
-	//		tBinaryTreeRecursive(other.root->right);
-	//	}
-	//	else {
-
-	//	}
-
-	//}
-	//curRoot = curRoot->left;//left of curRoot should be null
-	//other = other->left;
 }
 
 //overwrites tree
@@ -123,9 +105,40 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 	}
 
 	//overwrite with new data
+	root = rhs.root;//set root to the root of the tree getting copied
+
+	while (vertices != rhs.vertices) {
+		vertices;
+		copyAssignmentRecursive(root, rhs);
+	}
+	
+
+	//vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
+
 
 	return *this;
 }
+
+template<typename T>
+tBinaryTree<T>& tBinaryTree<T>::copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other) {
+
+	if (curParent != nullptr) {
+		vertex* copyNode = new vertex();//create new empty node
+		copyNode->data = curParent->data;//copy current node into empty node
+
+		//if (curParent->left != nullptr) {
+		copyAssignmentRecursive(curParent->left, other);
+		//}
+		//if (curParent->right != nullptr) {
+		copyAssignmentRecursive(curParent->right, other);
+		//}
+
+	}
+
+	return *this;
+
+}
+
 
 //deletes tree
 template<typename T>
