@@ -18,9 +18,6 @@ public:
 		bool hasLeft() const;//a helper function, should return true if a child is present, otherwise false
 		bool hasRight() const;//a helper function, should return true if a child is present, otherwise false
 
-		/*int getSize() {
-			
-		}*/
 
 		vertex();//a default constructor that initializes its data members
 	};
@@ -38,8 +35,8 @@ public:
 
 	void insert(const T& value);//accepts a value to be added to the binary tree
 	
-	//search
-	bool search(const T& value, vertex& found);
+	//search                           Now is a reference to a pointer
+	bool search(const T& value, vertex& *found);
 
 private:
 	std::vector<vertex*> vertices;//is a vector of pointers to vertices,
@@ -55,6 +52,15 @@ private:
 	void tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other);
 
 	tBinaryTree& copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other);
+
+	//pre
+
+	
+	//post
+	
+
+	//in Order
+
 
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
@@ -232,7 +238,7 @@ void tBinaryTree<T>::_insertRecursive(vertex*& curParent, const T& value) {
 }
 
 template<typename T>
-bool tBinaryTree<T>::search(const T& value, vertex& found) {
+bool tBinaryTree<T>::search(const T& value, vertex& *found) {
 	bool valFound = false;
 	searchRecursive(root, value, found, valFound);
 	return valFound;
