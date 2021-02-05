@@ -81,7 +81,7 @@ private:
 	bool searchRecursive(vertex*& curParent, const T& value, vertex*& found, bool valFound);
 
 	//remove
-	void removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex* target);
+	void removeR(vertex*& curParent, vertex*& prevParent, vertex* target);
 
 	//get the left most child
 	vertex* leftMost(vertex* curParent);
@@ -366,7 +366,7 @@ void tBinaryTree<T>::remove(vertex* target) {
 	vertex* prevParent;
 	
 	if (root != nullptr) {
-		removeR(root, /*prevParent,*/ target);
+		removeR(root, prevParent, target);
 
 	}
 	else {
@@ -375,44 +375,49 @@ void tBinaryTree<T>::remove(vertex* target) {
 }
 
 template<typename T>
-void tBinaryTree<T>::removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex* target) {
+void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* target) {
 
 	////update prev parent
-	//if (curParent->data != target->data) {
-	//	if (curParent->data < target->data) {//if target value bigger
-	//		prevParent = curParent;
-	//		removeR(curParent->right, prevParent, target);
-	//	}
-	//	else if (curParent->data > target->data) {//if target value smaller
-	//		prevParent = curParent;
-	//		removeR(curParent->left, prevParent, target);
-	//	}
-	//}
+	if (curParent->data != target->data) {
+		if (curParent->data < target->data) {//if target value bigger
+			prevParent = curParent;
+			removeR(curParent->right, prevParent, target);
+		}
+		else if (curParent->data > target->data) {//if target value smaller
+			prevParent = curParent;
+			removeR(curParent->left, prevParent, target);
+		}
+	}
 
-	if (curParent->data < target->data ) {
-		removeR(curParent->right, /*prevParent,*/ target);
+	/*if (curParent->data < target->data ) {
+		removeR(curParent->right, target);
 	}
 	else if (curParent->data < target->data) {
-		removeR(curParent->left, /*prevParent,*/ target);
-	}
+		removeR(curParent->left, target);
+	}*/
 	else if (curParent->data == target->data) {
 		//if vertex has no child
 		if (curParent->left == nullptr && curParent->right == nullptr) {
 			//delete target
-			curParent = nullptr;
 			delete curParent;
+			curParent = nullptr;
 		}
 		//if vertex has two children
 		else if (curParent->left != nullptr && curParent->right != nullptr) {
 			
 			//get the left most child on the right branch
-			curParent = leftMost(curParent->right);//copy child over to become new root
+
+			
+  //Before: curParent = 21          21->right
+			vertex* leftMostVal = leftMost(curParent->right);//copy child over to become new root
+  //After:  curParent = 24?
+
 
 			//update target to remove duplicate
-			target->data = curParent->data;
+			target->data = leftMostVal->data;
 
 			//delete child from right branch by recalling RemoveR() to search through the tree again
-			removeR(curParent->right, target);
+			removeR(curParent->right, prevParent, target);
 			
 			//move right child as a replacement for curParent
 			//prevParent->right = curParent->right;
@@ -426,7 +431,7 @@ void tBinaryTree<T>::removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex
 		//if only has right child
 		else if (curParent->right != nullptr) {
 			//connect targets parent to targets child
-			//prevParent->right = curParent->right;
+			prevParent->right = curParent->right;
 
 			//curParent->right = nullptr;
 			//delete curParent->right;
@@ -436,10 +441,10 @@ void tBinaryTree<T>::removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex
 		//if only has left child
 		else if (curParent->left != nullptr) {
 			
-			//prevParent->left = curParent->left;
+			prevParent->left = curParent->left;
 
-			curParent->left = nullptr;
-			delete curParent->left;
+			//curParent->left = nullptr;
+			//delete curParent->left;
 			
 		}
 
@@ -453,10 +458,10 @@ void tBinaryTree<T>::removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex
 	
 }
 
-template<typename T>
+template<typename T>//                                            24->right
 typename tBinaryTree<T>::vertex* tBinaryTree<T>::leftMost(vertex* curParent) {
 	if (curParent->left != nullptr) {
-		leftMost(curParent->left);//21->24->23
+		return leftMost(curParent->left);//24->23
 	}
 	return curParent;//I want it to return 23 but it returns 24
 

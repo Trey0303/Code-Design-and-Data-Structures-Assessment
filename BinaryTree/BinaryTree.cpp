@@ -6,9 +6,9 @@ int main()
     tBinaryTree<int> numTree;
 
     numTree.insert(14); //            14
-    numTree.insert(21);//      7              21
+    numTree.insert(21);//      7              23
     numTree.insert(7);//    5     9       19      24
-    numTree.insert(5);//  4  6  8  10   18  20  23  50
+    numTree.insert(5);//  4        10   18  20  23  50
     numTree.insert(9);
     numTree.insert(24);
     numTree.insert(19);
@@ -16,7 +16,7 @@ int main()
     numTree.insert(20);
     numTree.insert(23);
     numTree.insert(18);
-    numTree.insert(8);
+    /*numTree.insert(8);*/
     numTree.insert(10);
     numTree.insert(4);
     /*numTree.insert(6);*/
