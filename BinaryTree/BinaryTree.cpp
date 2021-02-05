@@ -22,22 +22,23 @@ int main()
     /*numTree.insert(6);*/
 
     tBinaryTree<int>::vertex* searchNum;//this is for finding the vertex
-    numTree.search(21, searchNum);//search tree using 9 and return vertex for found value
+    numTree.search(10, searchNum);//search tree using 9 and return vertex for found value
 
-
+    //before:vertex=0 data= null left=null right= null
     tBinaryTree<int> copyTree(numTree);//copy constructor
+    //after:vertex=13 data= null left=null right= null
 
     tBinaryTree<int> copyOfACopy(copyTree);
 
-    //copyTree.insert(3);
-    //copyTree.insert(11);
-    //copyTree.insert(22);
-    //copyTree.insert(30);
+    copyTree.insert(3);
+    copyTree.insert(11);
+    copyTree.insert(22);
+    copyTree.insert(30);
 
     tBinaryTree<int> anotherCopy(copyTree);
 
     //overwrites copyTree with copyOfACopy data
-    //copyTree = copyOfACopy;//copy assignment
+    copyTree = copyOfACopy;//copy assignment
 
     copyTree.printPreOrder();//14,7,5,4,6,9,8,10,21,19,18,20,24,23,50
     copyTree.printPostOrder();//4,6,5,8,10,9,7,18,20,19,23,50,24,21,14

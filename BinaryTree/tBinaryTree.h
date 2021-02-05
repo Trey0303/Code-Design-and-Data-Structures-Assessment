@@ -65,7 +65,7 @@ private:
 
 	void clearTree(vertex*& curParent);
 
-	void tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other);
+	vertex* tBinaryTreeRecursive(vertex*& copyRoot, vertex*& other);
 
 	tBinaryTree& copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other);
 
@@ -96,39 +96,48 @@ tBinaryTree<T>::tBinaryTree() {
 
 //copys tree
 template<typename T>
-tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//other is original tree/list
+tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//copy constructor
 
-	root = other.root;//set root to the root of the tree getting copied
+	//root = other.root;//set root to the root of the tree getting copied
 
-	tBinaryTreeRecursive(root, other);
+	vertex* otherRoot = other.root;
+
+	if (otherRoot != nullptr) {
+		root = tBinaryTreeRecursive(root, otherRoot);
+
+	}
 
 	vertices = other.vertices;//set vertices to the size/number of vertices getting copied from the original
 
 }
 
 template<typename T>
-void tBinaryTree<T>::tBinaryTreeRecursive(vertex*& curParent, const tBinaryTree& other) {
-	
+typename tBinaryTree<T>::vertex* tBinaryTree<T>::tBinaryTreeRecursive(vertex*& copyRoot, vertex*& otherRoot) {
 
-	if (curParent != nullptr) {
+		vertex* left = nullptr;
+		vertex* right = nullptr;
+		//search through tree using in order search method
+		if (otherRoot->left != nullptr) {
+			left = tBinaryTreeRecursive(copyRoot, otherRoot->left);
+		}
+		
 		vertex* copyNode = new vertex();//create new empty node
-		copyNode->data = curParent->data;//copy current node into empty node
+		copyNode->data = otherRoot->data;//copy current node into empty node
+		copyNode->left = left;
+		
+		if (otherRoot->right != nullptr) {
+			right = tBinaryTreeRecursive(copyRoot, otherRoot->right);
+		}
 
-		//if (curParent->left != nullptr) {
-		tBinaryTreeRecursive(curParent->left, other);
-		//}
-		//if (curParent->right != nullptr) {
-		tBinaryTreeRecursive(curParent->right, other);
-		//}
+		copyNode->right = right;
 
-	}
-
+		return copyNode;
 }
 
 //overwrites tree
-template<typename T>
-tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
-	
+template<typename T>//         rhs is the tree your copying(example: lhs = rhs)
+tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {//copy assignment
+
 	//delete old data
 	while (root != nullptr) {//while tree not clear
 		clearTree(root);
@@ -136,36 +145,56 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {
 	}
 
 	//overwrite with new data
-	root = rhs.root;//set root to the root of the tree getting copied
+	tBinaryTree<T> copyTree(rhs);
+	
+	
+	/*if (root != nullptr) {
+		copyAssignmentRecursive(root, copyTree);
+	}*/
 
-	copyAssignmentRecursive(root, rhs);
+	//std::cout << std::endl;
+
+	//root = rhs.root;//set root to the root of the tree getting copied
+
+	//copyAssignmentRecursive(root, rhs);
 	
 	//update vertices
-	vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
+	//vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
 
 
 	return *this;
 }
 
 template<typename T>
-tBinaryTree<T>& tBinaryTree<T>::copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other) {
+tBinaryTree<T>& tBinaryTree<T>::copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& rhs) {
+	////search through tree using in order search method
+	//if (curParent->left != nullptr) {
+	//	copyAssignmentRecursive(curParent->left, rhs);
+	//}
+	//if (curParent->right != nullptr) {
+	//	copyAssignmentRecursive(curParent->right, rhs);
+	//}
+
+	////copy node
+	//std::cout << curParent->data << ", ";//print only when currnt root is not null
+	//vertex* newNode = curParent;
+
+	//return *this;
 
 
+	//if (curParent != nullptr) {
+	//	vertex* copyNode = new vertex();//create new empty node
+	//	copyNode->data = curParent->data;//copy current node into empty node
 
-	if (curParent != nullptr) {
-		vertex* copyNode = new vertex();//create new empty node
-		copyNode->data = curParent->data;//copy current node into empty node
+	//	//if (curParent->left != nullptr) {
+	//	copyAssignmentRecursive(curParent->left, other);
+	//	//}
+	//	//if (curParent->right != nullptr) {
+	//	copyAssignmentRecursive(curParent->right, other);
+	//	//}
 
-		//if (curParent->left != nullptr) {
-		copyAssignmentRecursive(curParent->left, other);
-		//}
-		//if (curParent->right != nullptr) {
-		copyAssignmentRecursive(curParent->right, other);
-		//}
+	//}
 
-	}
-
-	return *this;
 
 }
 
@@ -388,13 +417,6 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 			removeR(curParent->left, prevParent, target);
 		}
 	}
-
-	/*if (curParent->data < target->data ) {
-		removeR(curParent->right, target);
-	}
-	else if (curParent->data < target->data) {
-		removeR(curParent->left, target);
-	}*/
 	else if (curParent->data == target->data) {
 		//if vertex has no child
 		if (curParent->left == nullptr && curParent->right == nullptr) {
@@ -406,64 +428,35 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		else if (curParent->left != nullptr && curParent->right != nullptr) {
 			
 			//get the left most child on the right branch
-
-			
-  //Before: curParent = 21          21->right
 			vertex* leftMostVal = leftMost(curParent->right);//copy child over to become new root
-  //After:  curParent = 24?
-
 
 			//update target to remove duplicate
 			target->data = leftMostVal->data;
 
-			//delete child from right branch by recalling RemoveR() to search through the tree again
+			//delete child duplicate from right branch by recalling RemoveR() to search through the tree again
 			removeR(curParent->right, prevParent, target);
 			
-			//move right child as a replacement for curParent
-			//prevParent->right = curParent->right;
-			//curParent = curParent->right;
-
-			////delete target
-			//curParent->right = nullptr;
-			//delete curParent->right;
 		}
 		//if vertex has one child
 		//if only has right child
 		else if (curParent->right != nullptr) {
 			//connect targets parent to targets child
 			prevParent->right = curParent->right;
-
-			//curParent->right = nullptr;
-			//delete curParent->right;
-			
-			
 		}
 		//if only has left child
 		else if (curParent->left != nullptr) {
-			
 			prevParent->left = curParent->left;
-
-			//curParent->left = nullptr;
-			//delete curParent->left;
-			
 		}
-
-		//dont forget to remove a vertex from the vertices 
-		//vector that holds pointers to every vertex?
-
 	}
-	/*else {
-		std::cout << "target not found" << std::endl;
-	}*/
 	
 }
 
-template<typename T>//                                            24->right
+template<typename T>
 typename tBinaryTree<T>::vertex* tBinaryTree<T>::leftMost(vertex* curParent) {
 	if (curParent->left != nullptr) {
-		return leftMost(curParent->left);//24->23
+		return leftMost(curParent->left);//return needed to keep the value updated
 	}
-	return curParent;//I want it to return 23 but it returns 24
+	return curParent;//returns left most child
 
 
 }
