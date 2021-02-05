@@ -51,6 +51,9 @@ public:
 	//remove
 	void remove(vertex *target);
 
+	//get the left most child
+	//void leftMost();
+
 private:
 	std::vector<vertex*> vertices;//is a vector of pointers to vertices,
 	// which should be added/removed to when vertices are created/destroyed respectively
@@ -78,7 +81,10 @@ private:
 	bool searchRecursive(vertex*& curParent, const T& value, vertex*& found, bool valFound);
 
 	//remove
-	void removeR(vertex*& curParent, vertex*& prevParent, vertex* target);
+	void removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex* target);
+
+	//get the left most child
+	vertex* leftMost(vertex* curParent);
 
 	vertex* root;//is a pointer referring to the very first vertex in the tree, if any
 };
@@ -360,7 +366,7 @@ void tBinaryTree<T>::remove(vertex* target) {
 	vertex* prevParent;
 	
 	if (root != nullptr) {
-		removeR(root, prevParent, target);
+		removeR(root, /*prevParent,*/ target);
 
 	}
 	else {
@@ -369,22 +375,27 @@ void tBinaryTree<T>::remove(vertex* target) {
 }
 
 template<typename T>
-void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* target) {
-	
+void tBinaryTree<T>::removeR(vertex*& curParent, /*vertex*& prevParent,*/ vertex* target) {
 
-	//update prev parent
-	if (curParent->data != target->data) {
-		if (curParent->data < target->data) {//if target value bigger
-			prevParent = curParent;
-			removeR(curParent->right, prevParent, target);
-		}
-		else if (curParent->data > target->data) {//if target value smaller
-			prevParent = curParent;
-			removeR(curParent->left, prevParent, target);
-		}
+	////update prev parent
+	//if (curParent->data != target->data) {
+	//	if (curParent->data < target->data) {//if target value bigger
+	//		prevParent = curParent;
+	//		removeR(curParent->right, prevParent, target);
+	//	}
+	//	else if (curParent->data > target->data) {//if target value smaller
+	//		prevParent = curParent;
+	//		removeR(curParent->left, prevParent, target);
+	//	}
+	//}
+
+	if (curParent->data < target->data ) {
+		removeR(curParent->right, /*prevParent,*/ target);
 	}
-	
-	if (curParent->data == target->data) {
+	else if (curParent->data < target->data) {
+		removeR(curParent->left, /*prevParent,*/ target);
+	}
+	else if (curParent->data == target->data) {
 		//if vertex has no child
 		if (curParent->left == nullptr && curParent->right == nullptr) {
 			//delete target
@@ -393,11 +404,21 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		}
 		//if vertex has two children
 		else if (curParent->left != nullptr && curParent->right != nullptr) {
+			
+			//get the left most child on the right branch
+			curParent = leftMost(curParent->right);//copy child over to become new root
+
+			//update target to remove duplicate
+			target->data = curParent->data;
+
+			//delete child from right branch by recalling RemoveR() to search through the tree again
+			removeR(curParent->right, target);
+			
 			//move right child as a replacement for curParent
-			prevParent->right = curParent->right;
+			//prevParent->right = curParent->right;
 			//curParent = curParent->right;
 
-			//delete target
+			////delete target
 			//curParent->right = nullptr;
 			//delete curParent->right;
 		}
@@ -405,7 +426,7 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		//if only has right child
 		else if (curParent->right != nullptr) {
 			//connect targets parent to targets child
-			prevParent->right = curParent->right;
+			//prevParent->right = curParent->right;
 
 			//curParent->right = nullptr;
 			//delete curParent->right;
@@ -415,7 +436,7 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		//if only has left child
 		else if (curParent->left != nullptr) {
 			
-			prevParent->left = curParent->left;
+			//prevParent->left = curParent->left;
 
 			curParent->left = nullptr;
 			delete curParent->left;
@@ -430,4 +451,14 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		std::cout << "target not found" << std::endl;
 	}*/
 	
+}
+
+template<typename T>
+typename tBinaryTree<T>::vertex* tBinaryTree<T>::leftMost(vertex* curParent) {
+	if (curParent->left != nullptr) {
+		leftMost(curParent->left);//21->24->23
+	}
+	return curParent;//I want it to return 23 but it returns 24
+
+
 }

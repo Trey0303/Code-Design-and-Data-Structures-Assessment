@@ -16,7 +16,7 @@ int main()
     numTree.insert(20);
     numTree.insert(23);
     numTree.insert(18);
-    /*numTree.insert(8);*/
+    numTree.insert(8);
     numTree.insert(10);
     numTree.insert(4);
     /*numTree.insert(6);*/
