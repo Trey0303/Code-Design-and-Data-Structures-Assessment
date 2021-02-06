@@ -67,8 +67,6 @@ private:
 
 	vertex* tBinaryTreeRecursive(vertex*& copyRoot, vertex*& other);
 
-	tBinaryTree& copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& other);
-
 	//pre
 	void printPreOrderR(vertex*& curParent);
 
@@ -97,8 +95,6 @@ tBinaryTree<T>::tBinaryTree() {
 //copys tree
 template<typename T>
 tBinaryTree<T>::tBinaryTree(const tBinaryTree& other) {//copy constructor
-
-	//root = other.root;//set root to the root of the tree getting copied
 
 	vertex* otherRoot = other.root;
 
@@ -145,57 +141,15 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {//copy assign
 	}
 
 	//overwrite with new data
-	tBinaryTree<T> copyTree(rhs);
-	
-	
-	/*if (root != nullptr) {
-		copyAssignmentRecursive(root, copyTree);
-	}*/
+	vertex* otherRoot = rhs.root;
 
-	//std::cout << std::endl;
+	if (otherRoot != nullptr) {
+		root = tBinaryTreeRecursive(root, otherRoot);
 
-	//root = rhs.root;//set root to the root of the tree getting copied
+	}
 
-	//copyAssignmentRecursive(root, rhs);
-	
-	//update vertices
-	//vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
-
-
+	vertices = rhs.vertices;//set vertices to the size/number of vertices getting copied from the original
 	return *this;
-}
-
-template<typename T>
-tBinaryTree<T>& tBinaryTree<T>::copyAssignmentRecursive(vertex*& curParent, const tBinaryTree& rhs) {
-	////search through tree using in order search method
-	//if (curParent->left != nullptr) {
-	//	copyAssignmentRecursive(curParent->left, rhs);
-	//}
-	//if (curParent->right != nullptr) {
-	//	copyAssignmentRecursive(curParent->right, rhs);
-	//}
-
-	////copy node
-	//std::cout << curParent->data << ", ";//print only when currnt root is not null
-	//vertex* newNode = curParent;
-
-	//return *this;
-
-
-	//if (curParent != nullptr) {
-	//	vertex* copyNode = new vertex();//create new empty node
-	//	copyNode->data = curParent->data;//copy current node into empty node
-
-	//	//if (curParent->left != nullptr) {
-	//	copyAssignmentRecursive(curParent->left, other);
-	//	//}
-	//	//if (curParent->right != nullptr) {
-	//	copyAssignmentRecursive(curParent->right, other);
-	//	//}
-
-	//}
-
-
 }
 
 
@@ -405,6 +359,7 @@ void tBinaryTree<T>::remove(vertex* target) {
 
 template<typename T>
 void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* target) {
+	vertex* right = nullptr;
 
 	////update prev parent
 	if (curParent->data != target->data) {
@@ -441,11 +396,21 @@ void tBinaryTree<T>::removeR(vertex*& curParent, vertex*& prevParent, vertex* ta
 		//if only has right child
 		else if (curParent->right != nullptr) {
 			//connect targets parent to targets child
-			prevParent->right = curParent->right;
+			right = curParent->right;//set right to current right
+			//vertex* temp = new vertex();//create a new node
+			//temp->data = curParent->data;//get data of current node
+			//temp->right = right;//set new node right data
+			delete curParent;//delete node from tree
+			curParent = nullptr;
+			prevParent->right = right;//set curParent->right as current node
 		}
 		//if only has left child
 		else if (curParent->left != nullptr) {
-			prevParent->left = curParent->left;
+			//vertex* temp = curParent;//create a new node
+			curParent = curParent->left;//get data of current node
+			//delete temp;//set new node right data
+			
+			//prevParent->left = curParent->left;
 		}
 	}
 	
