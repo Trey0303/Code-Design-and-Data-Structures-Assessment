@@ -2,6 +2,15 @@
 
 #include <vector>
 
+/*
+Oh, and you should include the iostream header at the top of your 
+binary tree header since it uses it. 
+Your test program likely works because it is implicitly added by the main.cpp file, 
+but if used standalone or with a main.cpp that does not include it, 
+your program would break.
+*/
+
+
 template<typename T>
 class tBinaryTree {
 public:
@@ -152,6 +161,12 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {//copy assign
 	return *this;
 }
 
+
+/*
+~tBinaryTree(), the destructor, does not appear to delete the objects. 
+You are erroneously setting the pointer to null before you destroy it. 
+This prevents the destruction of the vertices (and their data) 
+by telling the program to delete the object at "null" which is nothing.*/
 
 //deletes tree
 template<typename T>
@@ -311,6 +326,11 @@ void tBinaryTree<T>::printInOrderR(vertex*& curParent) {
 	}
 
 }
+
+
+/*
+bool search(const T& value, vertex*& found), 
+should write nullptr to found if a corresponding vertex was not able to be found.*/
 
 template<typename T>
 bool tBinaryTree<T>::search(const T& value, vertex*& found) {

@@ -425,6 +425,13 @@ void tList<T>::clear() {
 	}
 }
 
+/*
+resize(size_t) needs to *default-initialize* any new elements that are going to be added. 
+Your implementation does not and instead appears to initialize them by invoking T's 
+parameterized constructor that accepts an integer. 
+This will break if T does not implement a parameterized constructor that accepts "7".
+*/
+
 template <typename T>
 void tList<T>::resize(size_t newSize) {
 	int count = 0;
@@ -437,7 +444,7 @@ void tList<T>::resize(size_t newSize) {
 			curNode = curNode->next;
 		}
 		if (count < newSize) {//if list is smaller than new size
-			push_back(T);
+			push_back(7);
 		}
 		else if(count > newSize) {//if list is bigger than new size
 			pop_back();
