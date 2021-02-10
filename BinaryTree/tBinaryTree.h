@@ -1,14 +1,7 @@
 #pragma once
 
 #include <vector>
-
-/*
-Oh, and you should include the iostream header at the top of your 
-binary tree header since it uses it. 
-Your test program likely works because it is implicitly added by the main.cpp file, 
-but if used standalone or with a main.cpp that does not include it, 
-your program would break.
-*/
+#include <iostream>
 
 
 template<typename T>
@@ -161,13 +154,6 @@ tBinaryTree<T>& tBinaryTree<T>::operator=(const tBinaryTree& rhs) {//copy assign
 	return *this;
 }
 
-
-/*
-~tBinaryTree(), the destructor, does not appear to delete the objects. 
-You are erroneously setting the pointer to null before you destroy it. 
-This prevents the destruction of the vertices (and their data) 
-by telling the program to delete the object at "null" which is nothing.*/
-
 //deletes tree
 template<typename T>
 tBinaryTree<T>::~tBinaryTree() {
@@ -189,8 +175,8 @@ void tBinaryTree<T>::clearTree(vertex*& curParent) {
 		clearTree(curParent->right);
 	}
 	else if (curParent != nullptr) {//if right and left of curParent are both null and root isnt
-		curParent = nullptr;
 		delete curParent;//delete root
+		curParent = nullptr;
 		//after deleted curParent
 		//will check while loop to see if there are still nodes left
 		//if there are then it will start this function again from the beginning
@@ -358,6 +344,7 @@ bool tBinaryTree<T>::searchRecursive(vertex*& curParent, const T& value, vertex*
 	}
 	else {//if value not found anywhere in tree
 		std::cout << "false" << std::endl;
+		found = nullptr;//set found to null if vertex is not found
 		valFound = false;
 		return valFound;//return false
 
