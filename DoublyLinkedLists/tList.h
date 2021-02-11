@@ -444,7 +444,7 @@ void tList<T>::resize(size_t newSize) {
 			curNode = curNode->next;
 		}
 		if (count < newSize) {//if list is smaller than new size
-			push_back(7);
+			push_back(T());
 		}
 		else if(count > newSize) {//if list is bigger than new size
 			pop_back();
