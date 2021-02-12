@@ -18,11 +18,11 @@ int main()
     numTree.insert(18);
     /*numTree.insert(8);*/
     numTree.insert(10);
-    numTree.insert(4);
+    numTree.insert(4);//13
     /*numTree.insert(6);*/
 
     tBinaryTree<int>::vertex* searchNum;//this is for finding the vertex
-    numTree.search(54, searchNum);//search tree using 9 and return vertex for found value
+    numTree.search(20, searchNum);//search tree using 9 and return vertex for found value
 
     //before:vertex=0 data= null left=null right= null
     tBinaryTree<int> copyTree(numTree);//copy constructor
