@@ -175,6 +175,7 @@ void tBinaryTree<T>::clearTree(vertex*& curParent) {
 		clearTree(curParent->right);
 	}
 	else if (curParent != nullptr) {//if right and left of curParent are both null and root isnt
+		//got to delete node before setting curParent back to nullptr
 		delete curParent;//delete root
 		curParent = nullptr;
 		//after deleted curParent
