@@ -28,14 +28,14 @@ int main()
     tBinaryTree<int> copyTree(numTree);//copy constructor
     //after:vertex=13 data= null left=null right= null
 
-    tBinaryTree<int> copyOfACopy(copyTree);
+    tBinaryTree<int> copyOfACopy(copyTree);//13
 
     copyTree.insert(3);
     copyTree.insert(11);
     copyTree.insert(22);
-    copyTree.insert(30);
+    copyTree.insert(30);//17
 
-    tBinaryTree<int> anotherCopy(copyTree);
+    tBinaryTree<int> anotherCopy(copyTree);//17
 
     //overwrites copyTree with copyOfACopy data
     copyTree = copyOfACopy;//copy assignment
@@ -44,7 +44,7 @@ int main()
     copyTree.printPostOrder();//4,6,5,8,10,9,7,18,20,19,23,50,24,21,14
     copyTree.printInOrder();//4,5,6,7,8,9,10,14,18,19,20,21,23,24,50
 
-    
+    //numTree 13 copyOfACopy 13 anotherCopy 17 copyTree 13 
     copyTree.remove(searchNum);
 
     return 0;
