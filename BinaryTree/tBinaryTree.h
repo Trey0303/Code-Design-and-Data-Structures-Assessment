@@ -355,7 +355,8 @@ template<typename T>
 void tBinaryTree<T>::remove(vertex* target) {
 	vertex* prevParent;
 	
-	if (root != nullptr) {
+	//if target and tree is null then there is no need to call removeR because one of them is empty
+	if (root != nullptr && target != nullptr) {
 		removeR(root, prevParent, target);
 
 	}
